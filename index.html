@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Activity Tracker</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Activity Tracker</h1>
+            <div class="date-container">
+                <span id="current-date"></span>
+            </div>
+            <div class="header-controls">
+                <div class="data-storage-controls">
+                    <span id="db-status" class="db-status-indicator">Database Ready</span>
+                    <button id="save-data-btn" class="btn-primary" title="Export your data to a JSON file for backup">
+                        <i class="fas fa-download"></i> Export Backup
+                    </button>
+                    <label for="load-data" class="btn-primary" title="Import data from a backup file">
+                        <i class="fas fa-upload"></i> Import Backup
+                    </label>
+                    <input type="file" id="load-data" accept=".json" style="display: none;">
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="activity-form">
+                <h2>Add New Activity</h2>
+                <form id="activity-form">
+                    <div class="form-group">
+                        <label for="activity-date">Date:</label>
+                        <input type="date" id="activity-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="activity-time">Start Time:</label>
+                        <input type="time" id="activity-time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="activity-duration">Duration (minutes):</label>
+                        <input type="number" id="activity-duration" min="1" value="30" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="activity-name">Activity:</label>
+                        <input type="text" id="activity-name" placeholder="What are you doing?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="activity-category">Category:</label>
+                        <select id="activity-category" id="category-select">
+                            <option value="work">Work</option>
+                            <option value="personal">Personal</option>
+                            <option value="health">Health</option>
+                            <option value="meals">Meals</option>
+                            <option value="sleep">Sleep</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="custom-category">Custom Category:</label>
+                        <div class="custom-category-container">
+                            <input type="text" id="custom-category" placeholder="Add new category">
+                            <button type="button" id="add-category-btn" class="btn-small">Add</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-add">Add Activity</button>
+                </form>
+            </section>
+
+            <section class="timeline">
+                <h2>Today's Timeline</h2>
+                <div class="timeline-container" id="timeline-container">
+                    <!-- Activities will be displayed here -->
+                    <p class="empty-message" id="empty-timeline">No activities added yet</p>
+                </div>
+            </section>
+        </main>
+
+        <section class="summary">
+            <h2>Daily Summary</h2>
+            <div class="summary-container" id="summary-container">
+                <!-- Summary will be shown here -->
+            </div>
+        </section>
+        
+        <section class="data-visualization">
+            <h2>Data Visualization</h2>
+            <div class="chart-filters">
+                <div class="form-group">
+                    <label for="chart-type">Chart Type:</label>
+                    <select id="chart-type">
+                        <option value="category">Activities by Category</option>
+                        <option value="time">Time Spent by Category</option>
+                        <option value="daily">Activities by Day</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date-range">Date Range:</label>
+                    <select id="date-range">
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="all">All Time</option>
+                    </select>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="activity-chart"></canvas>
+            </div>
+        </section>
+        
+        <section class="calendar-view">
+            <h2>Calendar View</h2>
+            <div class="calendar-controls">
+                <button id="prev-month" class="btn-outline"><i class="fas fa-chevron-left"></i></button>
+                <h3 id="calendar-month">May 2025</h3>
+                <button id="next-month" class="btn-outline"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="calendar-grid" id="calendar-grid">
+                <!-- Calendar will be generated here -->
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Daily Activity Tracker &copy; 2025</p>
+    </footer>
+    
+    <!-- Activity Detail Modal -->
+    <div id="activity-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Activities for <span id="modal-date"></span></h2>
+            <div id="modal-activities">
+                <!-- Activities for selected date -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/db-storage.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/chart-db.js"></script>
+    <script src="js/storage-integration.js"></script>
+    <script src="js/db-overrides.js"></script>
+    <script src="js/db-debugger.js"></script>
+    <script>
+        // Use database-only initialization when the document is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize the app with database-only support
+            initAppWithDB();
+        });
+    </script>
+</body>
+</html>
