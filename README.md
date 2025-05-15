@@ -15,6 +15,12 @@ A modern, offline-capable web application to track and visualize your daily acti
 - 🎨 Custom categories with automatic color assignment
 - 🔄 Real-time updates across all views
 
+## Live Demo
+
+Access the live application at: [Daily Activity Tracker](https://codoom1.github.io/Dailyactivitiestracker)
+
+The application is hosted on GitHub Pages and works entirely in your browser. No installation is required to use it.
+
 ## Quick Start Guide
 
 1. Access the Application:
